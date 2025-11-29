@@ -1,0 +1,43 @@
+{
+  "name": "blackjack",
+  "version": "1.0.0",
+  "description": "A modern blackjack game with Three.js card mechanics",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "keywords": [
+    "blackjack",
+    "nextjs",
+    "threejs",
+    "game"
+  ],
+  "author": "Dustin T Hughes",
+  "license": "ISC",
+  "dependencies": {
+    "@react-spring/three": "^9.7.5",
+    "@react-three/drei": "^9.117.0",
+    "@react-three/fiber": "^8.17.10",
+    "@types/three": "^0.169.0",
+    "framer-motion": "^11.12.0",
+    "lucide-react": "^0.460.0",
+    "next": "^15.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.170.0",
+    "zustand": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^15.0.3",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "typescript": "^5.6.3"
+  }
+}
