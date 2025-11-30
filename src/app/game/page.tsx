@@ -4,6 +4,7 @@ import { useEffect, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { useBlackjack } from '@/hooks/useBlackjack';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { BettingControls } from '@/components/game/BettingControls';
@@ -13,36 +14,11 @@ import { getAvailableActions } from '@/lib/blackjack';
 import { ANIMATION_DELAYS } from '@/types/game';
 import { RefreshCw, Home, Trophy, Zap, TrendingUp, Coins, Sparkles } from 'lucide-react';
 
-/**
- * Floating particles background effect.
- */
-function FloatingParticles() {
-  return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      {Array.from({ length: 30 }).map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 rounded-full"
-          style={{
-            background: i % 3 === 0 ? 'rgba(212, 175, 55, 0.4)' : 'rgba(255, 255, 255, 0.1)',
-            left: `${Math.random() * 100}%`,
-          }}
-          initial={{ y: '100vh', opacity: 0 }}
-          animate={{
-            y: '-10vh',
-            opacity: [0, 0.8, 0],
-          }}
-          transition={{
-            duration: Math.random() * 15 + 15,
-            repeat: Infinity,
-            delay: Math.random() * 10,
-            ease: 'linear',
-          }}
-        />
-      ))}
-    </div>
-  );
-}
+// Dynamically import FloatingParticles with ssr: false to avoid hydration mismatch
+const FloatingParticles = dynamic(
+  () => import('@/components/game/FloatingParticles'),
+  { ssr: false }
+);
 
 /**
  * Luxurious header stats bar.

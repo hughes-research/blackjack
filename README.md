@@ -87,6 +87,22 @@ This project was developed by Dustin T Hughes with assistance from [Cursor IDE](
 </tr>
 </table>
 
+## 📸 Screenshots
+
+<p align="center">
+  <img src="docs/images/intro-screen.png" alt="Blackjack Royale - Intro Screen" width="800"/>
+  <br/>
+  <em>Stunning intro screen with animated card fan and luxury casino aesthetic</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/gameplay-screen.png" alt="Blackjack Royale - Gameplay" width="800"/>
+  <br/>
+  <em>Immersive gameplay with 2D cards, AI opponents, and real-time statistics</em>
+</p>
+
+---
+
 ## 🎲 Game Rules
 
 | Action | Description |

@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { useMemo, useState, useEffect } from 'react';
 import { HandDisplay } from './Card2D';
 import { Player, Dealer, GamePhase } from '@/types/game';
 import { formatScore } from '@/lib/blackjack';
@@ -16,16 +17,36 @@ interface VisualGameTableProps {
 
 /**
  * Particle effect component for visual flair.
+ * Uses client-only rendering to avoid hydration mismatches from Math.random().
  */
 function ParticleEffect() {
+  const [isMounted, setIsMounted] = useState(false);
+  
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  
+  // Generate particle data only on the client
+  const particles = useMemo(() => {
+    if (!isMounted) return [];
+    return Array.from({ length: 20 }).map((_, i) => ({
+      id: i,
+      x: Math.random() * 100 + '%',
+      duration: Math.random() * 10 + 10,
+      delay: Math.random() * 5,
+    }));
+  }, [isMounted]);
+
+  if (!isMounted) return null;
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {Array.from({ length: 20 }).map((_, i) => (
+      {particles.map((particle) => (
         <motion.div
-          key={i}
+          key={particle.id}
           className="absolute w-1 h-1 bg-gold/30 rounded-full"
           initial={{
-            x: Math.random() * 100 + '%',
+            x: particle.x,
             y: '100%',
             opacity: 0,
           }}
@@ -34,9 +55,9 @@ function ParticleEffect() {
             opacity: [0, 0.8, 0],
           }}
           transition={{
-            duration: Math.random() * 10 + 10,
+            duration: particle.duration,
             repeat: Infinity,
-            delay: Math.random() * 5,
+            delay: particle.delay,
             ease: 'linear',
           }}
         />
