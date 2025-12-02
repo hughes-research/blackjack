@@ -57,12 +57,12 @@ function Chip({ value, onClick, disabled }: ChipProps) {
       onClick={onClick}
       disabled={disabled}
       className={`
-        relative w-16 h-16 rounded-full 
+        relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full 
         bg-gradient-to-br ${style.bg}
         ${style.text} ${style.shadow}
-        font-display font-bold text-base
+        font-display font-bold text-sm sm:text-base
         disabled:opacity-30 disabled:cursor-not-allowed disabled:shadow-none
-        ring-4 ring-inset ${style.ring} ring-opacity-50
+        ring-2 sm:ring-4 ring-inset ${style.ring} ring-opacity-50
         flex items-center justify-center
         transition-all duration-200
       `}
@@ -74,8 +74,8 @@ function Chip({ value, onClick, disabled }: ChipProps) {
       whileTap={disabled ? {} : { scale: 0.95 }}
     >
       {/* Chip texture rings */}
-      <div className="absolute inset-2 rounded-full border-2 border-dashed border-current opacity-40" />
-      <div className="absolute inset-4 rounded-full border border-current opacity-20" />
+      <div className="absolute inset-1.5 sm:inset-2 rounded-full border-2 border-dashed border-current opacity-40" />
+      <div className="absolute inset-3 sm:inset-4 rounded-full border border-current opacity-20" />
       
       {/* Value */}
       <span className="relative z-10 drop-shadow-lg">${value}</span>
@@ -112,38 +112,38 @@ export function BettingControls({
       {/* Glow effect behind panel */}
       <div className="absolute -inset-4 bg-gold/10 rounded-3xl blur-2xl" />
       
-      <div className="relative flex flex-col items-center gap-6 p-8 bg-gradient-to-b from-black/70 via-black/60 to-black/70 backdrop-blur-xl rounded-2xl border border-gold/30 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+      <div className="relative flex flex-col items-center gap-3 sm:gap-4 md:gap-6 p-4 sm:p-6 md:p-8 bg-gradient-to-b from-black/70 via-black/60 to-black/70 backdrop-blur-xl rounded-xl sm:rounded-2xl border border-gold/30 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
         
         {/* Decorative top accent */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-gold to-transparent rounded-full" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 sm:w-32 h-1 bg-gradient-to-r from-transparent via-gold to-transparent rounded-full" />
         
         {/* Current Bet Display */}
         <div className="text-center">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <Sparkles className="w-4 h-4 text-gold/60" />
-            <p className="text-gold/70 text-sm uppercase tracking-[0.2em] font-display">Your Bet</p>
-            <Sparkles className="w-4 h-4 text-gold/60" />
+          <div className="flex items-center justify-center gap-1.5 sm:gap-2 mb-1 sm:mb-2">
+            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-gold/60" />
+            <p className="text-gold/70 text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] font-display">Your Bet</p>
+            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-gold/60" />
           </div>
           
           <motion.div 
-            className="flex items-center justify-center gap-3"
+            className="flex items-center justify-center gap-2 sm:gap-3"
             key={currentBet}
             initial={{ scale: 1.1 }}
             animate={{ scale: 1 }}
           >
-            <Coins className="w-8 h-8 text-gold" />
-            <span className="text-gold font-display text-5xl font-black tracking-tight drop-shadow-[0_2px_10px_rgba(212,175,55,0.5)]">
+            <Coins className="w-6 h-6 sm:w-8 sm:h-8 text-gold" />
+            <span className="text-gold font-display text-3xl sm:text-4xl md:text-5xl font-black tracking-tight drop-shadow-[0_2px_10px_rgba(212,175,55,0.5)]">
               ${currentBet}
             </span>
           </motion.div>
           
-          <p className="text-cream/40 text-xs mt-2 tracking-wider">
+          <p className="text-cream/40 text-[10px] sm:text-xs mt-1 sm:mt-2 tracking-wider">
             Min: ${MIN_BET} | Max: ${MAX_BET}
           </p>
         </div>
         
         {/* Chip Selection */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
           {CHIP_DENOMINATIONS.map((value, index) => (
             <motion.div
               key={value}
@@ -161,27 +161,27 @@ export function BettingControls({
         </div>
         
         {/* Available Chips Display */}
-        <div className="flex items-center gap-2 px-4 py-2 bg-black/30 rounded-full border border-gold/20">
-          <span className="text-cream/50 text-sm">Available:</span>
-          <span className="text-gold font-display font-bold text-lg">${availableChips}</span>
+        <div className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-black/30 rounded-full border border-gold/20">
+          <span className="text-cream/50 text-xs sm:text-sm">Available:</span>
+          <span className="text-gold font-display font-bold text-sm sm:text-lg">${availableChips}</span>
         </div>
         
         {/* Action Buttons */}
-        <div className="flex items-center gap-4 w-full">
+        <div className="flex items-center gap-2 sm:gap-4 w-full">
           {/* Clear Bet */}
           <motion.button
             onClick={onClearBet}
             disabled={disabled || currentBet === 0}
-            className="flex-1 py-3 px-6 bg-gradient-to-b from-red-900/60 to-red-950/60 text-red-300 rounded-xl 
+            className="flex-1 py-2 sm:py-3 px-3 sm:px-6 bg-gradient-to-b from-red-900/60 to-red-950/60 text-red-300 rounded-lg sm:rounded-xl 
                        border border-red-700/40
                        disabled:opacity-30 disabled:cursor-not-allowed
                        hover:from-red-800/60 hover:to-red-900/60 hover:border-red-600/50
                        transition-all duration-200
-                       flex items-center justify-center gap-2 font-display font-semibold"
+                       flex items-center justify-center gap-1.5 sm:gap-2 font-display font-semibold text-sm sm:text-base"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <Trash2 className="w-4 h-4" />
+            <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             Clear
           </motion.button>
           
@@ -189,9 +189,9 @@ export function BettingControls({
           <motion.button
             onClick={onDeal}
             disabled={disabled || !canDeal}
-            className="flex-1 relative py-3 px-6 overflow-hidden rounded-xl
+            className="flex-1 relative py-2 sm:py-3 px-3 sm:px-6 overflow-hidden rounded-lg sm:rounded-xl
                        disabled:opacity-30 disabled:cursor-not-allowed
-                       flex items-center justify-center gap-2 font-display font-bold tracking-wider"
+                       flex items-center justify-center gap-1.5 sm:gap-2 font-display font-bold tracking-wider text-sm sm:text-base"
             whileHover={canDeal ? { scale: 1.02 } : {}}
             whileTap={canDeal ? { scale: 0.98 } : {}}
           >

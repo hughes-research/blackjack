@@ -36,15 +36,16 @@ function HeaderStats({
     <motion.div 
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex items-center gap-4"
+      className="flex items-center gap-2 sm:gap-4"
     >
-      {/* Round badge */}
-      <div className="flex items-center gap-2 px-4 py-2 bg-black/40 backdrop-blur-sm rounded-full border border-gold/20">
-        <span className="text-gold/60 text-sm">Round</span>
-        <span className="text-gold font-display font-bold text-lg">{roundNumber}</span>
+      {/* Round badge - compact on mobile */}
+      <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 sm:py-2 bg-black/40 backdrop-blur-sm rounded-full border border-gold/20">
+        <span className="text-gold/60 text-xs sm:text-sm hidden sm:inline">Round</span>
+        <span className="text-gold/60 text-xs sm:hidden">R</span>
+        <span className="text-gold font-display font-bold text-sm sm:text-lg">{roundNumber}</span>
       </div>
       
-      {/* Stats pills */}
+      {/* Stats pills - hidden on mobile */}
       <div className="hidden md:flex items-center gap-2">
         <div className="flex items-center gap-1.5 px-3 py-1.5 bg-green-900/30 rounded-full border border-green-700/30">
           <Trophy className="w-3.5 h-3.5 text-green-400" />
@@ -61,10 +62,10 @@ function HeaderStats({
         )}
       </div>
       
-      {/* Chips display */}
-      <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-gold/20 via-gold/10 to-gold/20 backdrop-blur-sm rounded-full border border-gold/30">
-        <Coins className="w-4 h-4 text-gold" />
-        <span className="text-gold font-display font-bold">${userChips}</span>
+      {/* Chips display - compact on mobile */}
+      <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 sm:py-2 bg-gradient-to-r from-gold/20 via-gold/10 to-gold/20 backdrop-blur-sm rounded-full border border-gold/30">
+        <Coins className="w-3 h-3 sm:w-4 sm:h-4 text-gold" />
+        <span className="text-gold font-display font-bold text-sm sm:text-base">${userChips}</span>
       </div>
     </motion.div>
   );

@@ -65,8 +65,8 @@ function ActionButton({
       onClick={onClick}
       disabled={disabled}
       className={`
-        relative flex flex-col items-center justify-center gap-1.5 
-        py-4 px-6 min-w-[100px] rounded-xl overflow-hidden
+        relative flex flex-col items-center justify-center gap-0.5 sm:gap-1 
+        py-2 sm:py-2.5 md:py-3 px-3 sm:px-4 md:px-5 min-w-[55px] sm:min-w-[70px] md:min-w-[80px] rounded-lg sm:rounded-xl overflow-hidden
         border ${style.border}
         disabled:opacity-30 disabled:cursor-not-allowed
         transition-all duration-200
@@ -98,18 +98,18 @@ function ActionButton({
       )}
       
       {/* Icon */}
-      <span className={`relative ${style.text}`}>
+      <span className={`relative ${style.text} [&>svg]:w-4 [&>svg]:h-4 sm:[&>svg]:w-4 sm:[&>svg]:h-4 md:[&>svg]:w-5 md:[&>svg]:h-5`}>
         {icon}
       </span>
       
       {/* Label */}
-      <span className={`relative font-display font-bold text-sm tracking-wider ${style.text}`}>
+      <span className={`relative font-display font-bold text-[9px] sm:text-[10px] md:text-xs tracking-wider ${style.text}`}>
         {label}
       </span>
       
-      {/* Hotkey badge */}
+      {/* Hotkey badge - hidden on mobile */}
       {hotkey && (
-        <span className="absolute top-1 right-1 text-[10px] text-current/40 font-mono">
+        <span className="hidden md:block absolute top-0.5 right-0.5 text-[8px] text-current/40 font-mono">
           {hotkey}
         </span>
       )}
@@ -136,9 +136,9 @@ export function GameControls({
       className="relative"
     >
       {/* Glow behind panel */}
-      <div className="absolute -inset-4 bg-gold/5 rounded-3xl blur-2xl" />
+      <div className="absolute -inset-2 bg-gold/5 rounded-2xl blur-xl" />
       
-      <div className="relative flex items-center justify-center gap-3 p-5 bg-gradient-to-b from-black/70 via-black/60 to-black/70 backdrop-blur-xl rounded-2xl border border-gold/20 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
+      <div className="relative flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 p-1.5 sm:p-2 md:p-3 bg-gradient-to-b from-black/70 via-black/60 to-black/70 backdrop-blur-xl rounded-lg sm:rounded-xl border border-gold/20 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
         {/* Hit Button */}
         <ActionButton
           label="HIT"

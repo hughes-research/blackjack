@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { Settings, Play, Sparkles, Crown, Zap } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useSettings } from '@/hooks/useBlackjack';
+import { STARTING_CHIPS } from '@/types/game';
 
 /**
  * Animated counter component for visual flair.
@@ -215,6 +217,8 @@ function LuxuryFrame() {
  * Intro/Landing screen for the blackjack game.
  */
 export default function IntroScreen() {
+  const { settings } = useSettings();
+  
   return (
     <main className="relative min-h-screen overflow-hidden bg-rich-black">
       {/* Background Image with overlay */}
@@ -354,12 +358,12 @@ export default function IntroScreen() {
           </div>
           <div className="w-px h-8 bg-gold/20" />
           <div className="text-center">
-            <div className="text-gold font-display text-2xl font-bold">3:2</div>
+            <div className="text-gold font-display text-2xl font-bold">{settings.blackjackPays}</div>
             <div className="text-gold/50 text-xs uppercase tracking-wider">Blackjack Pays</div>
           </div>
           <div className="w-px h-8 bg-gold/20" />
           <div className="text-center">
-            <div className="text-gold font-display text-2xl font-bold">$1000</div>
+            <div className="text-gold font-display text-2xl font-bold">${STARTING_CHIPS.toLocaleString()}</div>
             <div className="text-gold/50 text-xs uppercase tracking-wider">Starting Chips</div>
           </div>
         </motion.div>

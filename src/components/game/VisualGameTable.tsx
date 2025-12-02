@@ -104,10 +104,12 @@ function PlayerPosition({ player, isActive, position, phase }: PlayerPositionPro
   const hand = player.hands[player.activeHandIndex];
   const hasCards = hand.cards.length > 0;
   
+  // Responsive positioning - AI players higher up on mobile
+  // User always at bottom center with more space
   const positionStyles = {
-    left: 'left-8 bottom-32',
-    center: 'left-1/2 -translate-x-1/2 bottom-24',
-    right: 'right-8 bottom-32',
+    left: 'left-1 sm:left-4 md:left-8 bottom-[55%] sm:bottom-40 md:bottom-36',
+    center: 'left-1/2 -translate-x-1/2 bottom-36 sm:bottom-32 md:bottom-36',
+    right: 'right-1 sm:right-4 md:right-8 bottom-[55%] sm:bottom-40 md:bottom-36',
   };
 
   return (
@@ -126,7 +128,7 @@ function PlayerPosition({ player, isActive, position, phase }: PlayerPositionPro
       )}
       
       <div className={`
-        relative flex flex-col items-center gap-3 p-4 rounded-2xl
+        relative flex flex-col items-center gap-2 sm:gap-3 p-2 sm:p-3 md:p-4 rounded-xl sm:rounded-2xl
         ${isActive 
           ? 'bg-gradient-to-t from-gold/20 via-black/40 to-black/20 border border-gold/40' 
           : 'bg-black/30 border border-gold/10'
@@ -134,17 +136,17 @@ function PlayerPosition({ player, isActive, position, phase }: PlayerPositionPro
         backdrop-blur-sm transition-all duration-300
       `}>
         {/* Player info */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           {player.type === 'user' ? (
-            <div className="p-1.5 rounded-full bg-gold/20">
-              <User className="w-4 h-4 text-gold" />
+            <div className="p-1 sm:p-1.5 rounded-full bg-gold/20">
+              <User className="w-3 h-3 sm:w-4 sm:h-4 text-gold" />
             </div>
           ) : (
-            <div className="p-1.5 rounded-full bg-casino-green-dark/50">
-              <Bot className="w-4 h-4 text-gold/60" />
+            <div className="p-1 sm:p-1.5 rounded-full bg-casino-green-dark/50">
+              <Bot className="w-3 h-3 sm:w-4 sm:h-4 text-gold/60" />
             </div>
           )}
-          <span className={`font-display font-semibold ${player.type === 'user' ? 'text-gold' : 'text-cream/80'}`}>
+          <span className={`font-display font-semibold text-sm sm:text-base ${player.type === 'user' ? 'text-gold' : 'text-cream/80'}`}>
             {player.name}
           </span>
           {isActive && phase === 'playing' && (
@@ -152,13 +154,13 @@ function PlayerPosition({ player, isActive, position, phase }: PlayerPositionPro
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 1, repeat: Infinity }}
             >
-              <Sparkles className="w-4 h-4 text-gold" />
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-gold" />
             </motion.div>
           )}
         </div>
         
         {/* Cards */}
-        <div className="min-h-[120px] flex items-center justify-center">
+        <div className="min-h-[100px] sm:min-h-[120px] md:min-h-[150px] flex items-center justify-center">
           {hasCards ? (
             <HandDisplay
               cards={hand.cards}
@@ -167,7 +169,7 @@ function PlayerPosition({ player, isActive, position, phase }: PlayerPositionPro
               dealDelay={0}
             />
           ) : (
-            <div className="w-20 h-28 rounded-lg border-2 border-dashed border-gold/20 flex items-center justify-center">
+            <div className="w-16 h-24 sm:w-20 sm:h-28 md:w-24 md:h-36 rounded-lg border-2 border-dashed border-gold/20 flex items-center justify-center">
               <span className="text-gold/30 text-xs">No cards</span>
             </div>
           )}
@@ -256,19 +258,19 @@ function DealerPosition({ dealer, isActive, phase }: DealerPositionProps) {
     <motion.div
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
-      className="absolute top-8 left-1/2 -translate-x-1/2"
+      className="absolute top-2 sm:top-4 md:top-8 left-1/2 -translate-x-1/2"
     >
       {/* Dealer glow */}
       {isActive && (
         <motion.div
-          className="absolute -inset-8 rounded-3xl bg-gradient-to-b from-gold/20 via-gold/5 to-transparent blur-xl"
+          className="absolute -inset-4 sm:-inset-6 md:-inset-8 rounded-3xl bg-gradient-to-b from-gold/20 via-gold/5 to-transparent blur-xl"
           animate={{ opacity: [0.5, 0.8, 0.5] }}
           transition={{ duration: 2, repeat: Infinity }}
         />
       )}
       
       <div className={`
-        relative flex flex-col items-center gap-3 p-4 rounded-2xl
+        relative flex flex-col items-center gap-2 sm:gap-3 p-2 sm:p-3 md:p-4 rounded-xl sm:rounded-2xl
         ${isActive 
           ? 'bg-gradient-to-b from-gold/20 via-black/40 to-black/20 border border-gold/40' 
           : 'bg-black/30 border border-gold/10'
@@ -276,11 +278,11 @@ function DealerPosition({ dealer, isActive, phase }: DealerPositionProps) {
         backdrop-blur-sm
       `}>
         {/* Dealer label */}
-        <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-full bg-gold/30">
-            <Crown className="w-5 h-5 text-gold" />
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <div className="p-1 sm:p-1.5 rounded-full bg-gold/30">
+            <Crown className="w-4 h-4 sm:w-5 sm:h-5 text-gold" />
           </div>
-          <span className="font-display font-bold text-gold text-lg">DEALER</span>
+          <span className="font-display font-bold text-gold text-base sm:text-lg">DEALER</span>
           {isActive && (
             <motion.span
               animate={{ opacity: [1, 0.5, 1] }}
@@ -293,7 +295,7 @@ function DealerPosition({ dealer, isActive, phase }: DealerPositionProps) {
         </div>
         
         {/* Cards */}
-        <div className="min-h-[120px] flex items-center justify-center">
+        <div className="min-h-[100px] sm:min-h-[120px] md:min-h-[150px] flex items-center justify-center">
           {hasCards ? (
             <div className="flex items-center">
               {dealer.hand.cards.map((card, index) => {
@@ -310,7 +312,7 @@ function DealerPosition({ dealer, isActive, phase }: DealerPositionProps) {
                     style={{ marginLeft: index > 0 ? '-0.75rem' : 0 }}
                   >
                     <div className={`
-                      relative w-20 h-28 rounded-lg overflow-hidden shadow-xl
+                      relative w-16 h-24 sm:w-20 sm:h-28 md:w-24 md:h-36 rounded-lg shadow-xl bg-white
                       ${isActive && index === dealer.hand.cards.length - 1 ? 'ring-2 ring-gold shadow-[0_0_20px_rgba(212,175,55,0.6)]' : ''}
                     `}>
                       <motion.div
@@ -328,8 +330,8 @@ function DealerPosition({ dealer, isActive, phase }: DealerPositionProps) {
                             src={card.imagePath}
                             alt="Card"
                             fill
-                            className="object-cover rounded-lg"
-                            sizes="80px"
+                            className="object-contain rounded-lg"
+                            sizes="96px"
                           />
                           <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent rounded-lg" />
                         </div>
@@ -345,8 +347,8 @@ function DealerPosition({ dealer, isActive, phase }: DealerPositionProps) {
                             src="/cards/back.svg"
                             alt="Card back"
                             fill
-                            className="object-cover rounded-lg"
-                            sizes="80px"
+                            className="object-contain rounded-lg"
+                            sizes="96px"
                           />
                           <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent rounded-lg" />
                         </div>
@@ -357,7 +359,7 @@ function DealerPosition({ dealer, isActive, phase }: DealerPositionProps) {
               })}
             </div>
           ) : (
-            <div className="w-20 h-28 rounded-lg border-2 border-dashed border-gold/20 flex items-center justify-center">
+            <div className="w-16 h-24 sm:w-20 sm:h-28 md:w-24 md:h-36 rounded-lg border-2 border-dashed border-gold/20 flex items-center justify-center">
               <Crown className="w-6 h-6 text-gold/20" />
             </div>
           )}

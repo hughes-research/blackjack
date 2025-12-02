@@ -14,10 +14,11 @@ interface Card2DProps {
   dealDelay?: number;
 }
 
+// Responsive card sizes - smaller on mobile, larger on desktop
 const sizeClasses = {
-  sm: 'w-14 h-20',
-  md: 'w-20 h-28',
-  lg: 'w-24 h-36',
+  sm: 'w-12 h-[72px] sm:w-14 sm:h-20 md:w-16 md:h-24',
+  md: 'w-16 h-24 sm:w-20 sm:h-28 md:w-24 md:h-36',
+  lg: 'w-20 h-28 sm:w-24 sm:h-36 md:w-32 md:h-44',
 };
 
 /**
@@ -91,46 +92,46 @@ export function Card2D({
           >
             {/* Front face */}
             <div 
-              className="absolute inset-0 backface-hidden rounded-lg overflow-hidden"
+              className="absolute inset-0 backface-hidden"
               style={{ backfaceVisibility: 'hidden' }}
             >
               <div className={`
-                relative w-full h-full rounded-lg overflow-hidden
+                relative w-full h-full rounded-lg bg-white
                 ${highlighted ? 'ring-2 ring-gold shadow-[0_0_20px_rgba(212,175,55,0.6)]' : 'shadow-xl'}
               `}>
                 <Image
                   src={frontImage}
                   alt="Card"
                   fill
-                  className="object-cover"
+                  className="object-contain rounded-lg"
                   sizes="(max-width: 768px) 80px, 96px"
                 />
                 {/* Shine effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none rounded-lg" />
               </div>
             </div>
             
             {/* Back face */}
             <div 
-              className="absolute inset-0 backface-hidden rounded-lg overflow-hidden"
+              className="absolute inset-0 backface-hidden"
               style={{ 
                 backfaceVisibility: 'hidden',
                 transform: 'rotateY(180deg)'
               }}
             >
               <div className={`
-                relative w-full h-full rounded-lg overflow-hidden shadow-xl
+                relative w-full h-full rounded-lg shadow-xl
                 ${highlighted ? 'ring-2 ring-gold shadow-[0_0_20px_rgba(212,175,55,0.6)]' : ''}
               `}>
                 <Image
                   src={backImage}
                   alt="Card back"
                   fill
-                  className="object-cover"
+                  className="object-contain rounded-lg"
                   sizes="(max-width: 768px) 80px, 96px"
                 />
                 {/* Shine effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none rounded-lg" />
               </div>
             </div>
           </motion.div>
