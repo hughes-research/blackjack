@@ -129,6 +129,9 @@ interface BlackjackActions {
   // Round management
   nextRound: () => void;
   
+  // Full game reset (start over from scratch)
+  startOver: () => void;
+  
   // Settings
   updateSettings: (settings: Partial<Settings>) => void;
   
@@ -702,6 +705,30 @@ export const useBlackjack = create<BlackjackStore>()(
           currentPlayerIndex: 0,
           phase: 'betting',
           roundNumber: roundNumber + 1,
+        });
+      },
+
+      // Full game reset - clear all data and start fresh
+      startOver: () => {
+        const { settings } = get();
+        const deck = shuffleDeck(createDeck(settings.numberOfDecks));
+        
+        // Create fresh players with starting chips
+        const players: Player[] = [
+          createPlayer('player-0', 'Alex', 'ai', 0),
+          createPlayer('player-1', 'You', 'user', 1),
+          createPlayer('player-2', 'Sam', 'ai', 2),
+        ];
+        
+        // Reset everything including stats
+        set({
+          players,
+          dealer: createDealer(),
+          deck,
+          currentPlayerIndex: 0,
+          phase: 'betting',
+          roundNumber: 1,
+          stats: DEFAULT_STATS, // Clear all statistics
         });
       },
 

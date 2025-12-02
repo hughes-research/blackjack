@@ -11,8 +11,8 @@ import { BettingControls } from '@/components/game/BettingControls';
 import { GameControls, InsurancePrompt } from '@/components/game/GameControls';
 import { VisualGameTable } from '@/components/game/VisualGameTable';
 import { getAvailableActions } from '@/lib/blackjack';
-import { ANIMATION_DELAYS } from '@/types/game';
-import { RefreshCw, Home, Trophy, Zap, TrendingUp, Coins, Sparkles } from 'lucide-react';
+import { ANIMATION_DELAYS, MIN_BET } from '@/types/game';
+import { RefreshCw, Home, Trophy, Zap, TrendingUp, Coins, Sparkles, AlertCircle } from 'lucide-react';
 
 // Dynamically import FloatingParticles with ssr: false to avoid hydration mismatch
 const FloatingParticles = dynamic(
@@ -222,6 +222,7 @@ export default function GamePage() {
     playDealerTurn,
     nextRound,
     playAITurn,
+    startOver,
   } = useBlackjack();
   
   // Initialize game on mount
@@ -323,6 +324,14 @@ export default function GamePage() {
   
   const isUserTurn = phase === 'playing' && activePlayer?.type === 'user';
   
+  // Check if user is broke (no chips and no current bet)
+  const isUserBroke = userPlayer && userPlayer.chips < MIN_BET && userPlayer.bets[0] === 0;
+  
+  // Handle start over (full reset)
+  const handleStartOver = useCallback(() => {
+    startOver();
+  }, [startOver]);
+  
   return (
     <main className="relative min-h-screen overflow-hidden bg-casino-green-dark">
       {/* Background layers */}
@@ -380,8 +389,80 @@ export default function GamePage() {
           <div className="absolute bottom-0 left-0 right-0 p-6">
             <div className="max-w-2xl mx-auto">
               <AnimatePresence mode="wait">
-                {/* Betting Phase */}
-                {phase === 'betting' && userPlayer && (
+                {/* Betting Phase - Game Over with Start Over option */}
+                {phase === 'betting' && userPlayer && isUserBroke && settings.allowRebuy && (
+                  <motion.div
+                    key="game-over-restart"
+                    initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 50, scale: 0.95 }}
+                    className="flex justify-center"
+                  >
+                    <div className="bg-black/70 backdrop-blur-md rounded-2xl border border-red-500/30 p-8 text-center max-w-md">
+                      <div className="flex justify-center mb-4">
+                        <div className="w-16 h-16 rounded-full bg-red-900/30 flex items-center justify-center">
+                          <AlertCircle className="w-8 h-8 text-red-400" />
+                        </div>
+                      </div>
+                      <h3 className="text-red-400 font-display text-3xl font-bold mb-2">GAME OVER</h3>
+                      <p className="text-cream/60 mb-6">
+                        You&apos;ve lost all your chips! Your session stats will be cleared.
+                      </p>
+                      <motion.button
+                        onClick={handleStartOver}
+                        className="group relative flex items-center justify-center gap-3 w-full py-4 px-8 overflow-hidden"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-gold-dark via-gold to-gold-dark rounded-xl" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                        <div className="absolute inset-0 rounded-xl border border-gold-shine shadow-[0_0_20px_rgba(212,175,55,0.3)]" />
+                        <RefreshCw className="relative w-5 h-5 text-rich-black" />
+                        <span className="relative font-display text-lg font-bold text-rich-black tracking-wider">
+                          Start Over
+                        </span>
+                      </motion.button>
+                    </div>
+                  </motion.div>
+                )}
+                
+                {/* Betting Phase - Game Over (No restart allowed) */}
+                {phase === 'betting' && userPlayer && isUserBroke && !settings.allowRebuy && (
+                  <motion.div
+                    key="game-over-final"
+                    initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 50, scale: 0.95 }}
+                    className="flex justify-center"
+                  >
+                    <div className="bg-black/70 backdrop-blur-md rounded-2xl border border-red-500/30 p-8 text-center max-w-md">
+                      <div className="flex justify-center mb-4">
+                        <div className="w-16 h-16 rounded-full bg-red-900/30 flex items-center justify-center">
+                          <AlertCircle className="w-8 h-8 text-red-400" />
+                        </div>
+                      </div>
+                      <h3 className="text-red-400 font-display text-3xl font-bold mb-2">GAME OVER</h3>
+                      <p className="text-cream/60 mb-6">
+                        You&apos;ve lost all your chips. Enable &quot;Allow Restart&quot; in Settings to play again.
+                      </p>
+                      <Link href="/settings">
+                        <motion.button
+                          className="group relative flex items-center justify-center gap-3 w-full py-4 px-8 overflow-hidden"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          <div className="absolute inset-0 bg-casino-green-dark/80 rounded-xl border border-gold/30" />
+                          <span className="relative font-display text-lg font-bold text-gold tracking-wider">
+                            Go to Settings
+                          </span>
+                        </motion.button>
+                      </Link>
+                    </div>
+                  </motion.div>
+                )}
+                
+                {/* Betting Phase - Normal */}
+                {phase === 'betting' && userPlayer && !isUserBroke && (
                   <motion.div
                     key="betting"
                     initial={{ opacity: 0, y: 50, scale: 0.95 }}

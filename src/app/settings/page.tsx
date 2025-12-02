@@ -18,7 +18,8 @@ import {
   RotateCcw,
   Home,
   Check,
-  Settings as SettingsIcon
+  Settings as SettingsIcon,
+  RefreshCw
 } from 'lucide-react';
 
 /**
@@ -307,6 +308,18 @@ export default function SettingsPage() {
                     { value: 'fast', label: 'Fast' },
                   ]}
                   onChange={(v) => handleChange('animationSpeed', v)}
+                />
+              </SettingRow>
+              
+              {/* Allow Restart */}
+              <SettingRow
+                icon={<RefreshCw className="w-5 h-5" />}
+                label="Allow Restart"
+                description="Reset game and start over when you go broke"
+              >
+                <ToggleSwitch
+                  checked={localSettings.allowRebuy}
+                  onChange={(v) => handleChange('allowRebuy', v)}
                 />
               </SettingRow>
             </div>

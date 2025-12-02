@@ -165,6 +165,8 @@ export interface Settings {
   readonly allowDoubleAfterSplit: boolean;
   /** Animation speed */
   readonly animationSpeed: AnimationSpeed;
+  /** Whether to allow rebuy (reset chips) when player goes broke */
+  readonly allowRebuy: boolean;
 }
 
 /**
@@ -225,6 +227,7 @@ export const DEFAULT_SETTINGS: Settings = {
   allowSurrender: true,
   allowDoubleAfterSplit: true,
   animationSpeed: 'normal',
+  allowRebuy: true,
 } as const;
 
 /**
